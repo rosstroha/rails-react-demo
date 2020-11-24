@@ -6,8 +6,8 @@ export class App extends Component {
 
   async componentDidMount () {
     let response = await fetch('/movie')
-    let movie = await response.json()
-    this.setState({title: movie.Title, poster: movie.Poster, plot: movie.Plot})
+    let {title, poster, plot} = await response.json()
+    this.setState({title, poster, plot})
   }
 
   header = () => {
