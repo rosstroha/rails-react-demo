@@ -5,7 +5,7 @@ export class App extends Component {
   state = { title: null, poster: null, plot: null }
 
   async componentDidMount () {
-    let response = await fetch('/movie')
+    let response = await fetch('/movie/tt4158110')
     let {title, poster, plot} = await response.json()
     this.setState({title, poster, plot})
   }
