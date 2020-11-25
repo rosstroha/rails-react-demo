@@ -19,7 +19,8 @@ module OmdbApi
   private
 
   def get_from_omdb_by_id(imdb_id)
-    query_options = @options[:query][:i] = imdb_id
+    query_options = @options.deep_dup
+    query_options[:query][:i] = imdb_id
     response = HTTParty.get('http://www.omdbapi.com/', query_options)
     parse_response(response, imdb_id)
   end
