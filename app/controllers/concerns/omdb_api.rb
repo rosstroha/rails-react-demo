@@ -1,7 +1,5 @@
 module OmdbApi
   extend ActiveSupport::Concern
-  include HTTParty
-  base_uri 'http://www.omdbapi.com/'
 
   def initialize
     @options = { query: { apikey: ENV['OMDB_KEY'] } }
@@ -10,7 +8,7 @@ module OmdbApi
   def find_movie(imdb_id)
     movie = Movie.find_by(imdb_id: imdb_id)
 
-    unless movie.persisted?
+    if movie.nil?
       omdb_response = get_from_omdb_by_id(imdb_id)
       movie = Movie.create(omdb_response)
     end
@@ -21,15 +19,19 @@ module OmdbApi
   private
 
   def get_from_omdb_by_id(imdb_id)
-    response = HTTParty.get(OMDB_URL, query_options)
-                       .parsed_response
-                       .deep_transform_keys(&:downcase)
-                       .deep_symbolize_keys
-                       .slice(:title, :poster, :plot)
-    response.merge(imdb_id: imdb_id)
+    response = HTTParty.get('http://www.omdbapi.com/', query_options(imdb_id))
+    parse_response(response, imdb_id)
   end
 
-  def query_options
-    @options.merge!(i: imdb_id)
+  def query_options(imdb_id)
+    @options[:query].merge!(i: imdb_id)
+    @options
+  end
+
+  def parse_response(response, imdb_id)
+    response.deep_transform_keys(&:downcase)
+            .deep_symbolize_keys
+            .slice(:title, :poster, :plot)
+            .merge(imdb_id: imdb_id)
   end
 end
