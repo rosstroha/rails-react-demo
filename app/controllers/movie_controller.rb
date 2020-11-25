@@ -5,7 +5,7 @@ class MovieController < ApplicationController
     # This will be provided by the client
     imdb_id = 'tt4158110'
 
-    options = { query: { apikey: 'd492728c', i: imdb_id } }
+    options = { query: { apikey: ENV['OMDB_KEY'], i: imdb_id } }
 
     # imdb_id should probably be unique
     movie = Movie.find_by(imdb_id: imdb_id)
