@@ -31,6 +31,10 @@ export function App (props) {
     return <MoviePoster poster={poster} title={title} plot={plot} />
   }
 
+  useEffect(() => {
+    fetchMovie()
+  }, [imdbId])
+
   return (
     <React.Fragment>
       <Row>
