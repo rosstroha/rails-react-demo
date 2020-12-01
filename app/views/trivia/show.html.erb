@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @trivium.body %>
+</p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @trivium.movie_id %>
+</p>
+
+<%= link_to 'Edit', edit_trivium_path(@trivium) %> |
+<%= link_to 'Back', trivia_index_path %>
