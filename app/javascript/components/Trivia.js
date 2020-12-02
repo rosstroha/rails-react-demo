@@ -13,6 +13,30 @@ export function Trivia (props) {
     return props.trivia.map(({id, body}) => <CollectionItem key={id}>{body}</CollectionItem>)
   }
 
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    const body = JSON.stringify({
+      movie_id: props.movieId,
+      body: newTrivia
+    })
+
+    const csrfToken = document.querySelector("[name='csrf-token']").content
+
+    let response = await fetch(
+      '/trivia.json',
+      {
+        method: 'POST',
+        body,
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken
+        }
+      }
+    )
+    let addedTrivia = await response.json()
+
+  }
+
   const newTriviaOnChange = (event) => {
     setNewTrivia(event.target.value)
   }
@@ -22,9 +46,11 @@ export function Trivia (props) {
       <Collection>
         { triviaComponent() }
       </Collection>
-      <Row className="add-trivia">
-        <Textarea placeholder="Add more trivia..." onChange={setNewTrivia} />
-        <Button node="button" type="submit" waves="light" floating icon={<Icon right>add</Icon>}></Button>
+      <Row>
+        <form className="add-trivia" onSubmit={onSubmit}>
+          <Textarea placeholder="Add more trivia..." onChange={newTriviaOnChange} />
+          <Button node="button" type="submit" waves="light" floating icon={<Icon right>add</Icon>}></Button>
+        </form>
       </Row>
     </React.Fragment>
   )

@@ -27,10 +27,10 @@ export function App (props) {
   }
 
   const posters = () => {
-    return allMovies.map(({poster, title, plot, trivia}, index) => {
+    return allMovies.map((movie, index) => {
       return (
         <Col s={2} key={index}>
-          <MoviePoster poster={poster} title={title} plot={plot} trivia={trivia} />
+          <MoviePoster movie={movie} />
         </Col>
       )
     })
