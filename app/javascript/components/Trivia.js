@@ -47,9 +47,9 @@ export function Trivia (props) {
         { triviaComponent() }
       </Collection>
       <Row>
-        <form className="add-trivia" onSubmit={onSubmit}>
-          <Textarea placeholder="Add more trivia..." onChange={newTriviaOnChange} />
-          <Button node="button" type="submit" waves="light" floating icon={<Icon right>add</Icon>}></Button>
+        <form id="add" className="add-trivia" onSubmit={onSubmit}>
+          <Textarea form="add" required validate label="Add more trivia..." onChange={newTriviaOnChange} />
+          <Button flat node="button" type="submit" waves="light" icon={<Icon className="secondary-content">add</Icon>}></Button>
         </form>
       </Row>
     </React.Fragment>
