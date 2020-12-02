@@ -6,9 +6,6 @@ import { find } from 'lodash'
 
 export function App (props) {
   const [imdbId, setImdbId] = useState('tt4158110')
-  const [title, setTitle] = useState('')
-  const [plot, setPlot] = useState('')
-  const [poster, setPoster] = useState('')
   const [allMovies, setAllMovies] = useState([])
 
   const handleIdChange = (event) => {
@@ -29,12 +26,14 @@ export function App (props) {
     fetchMovie()
   }
 
-  const posterComponent = ({poster, title, plot}) => {
-    return (
-      <Col>
-        <MoviePoster poster={poster} title={title} plot={plot} />
-      </Col>
-    )
+  const posters = () => {
+    return allMovies.map(({poster, title, plot, trivia}, index) => {
+      return (
+        <Col s={2} key={index}>
+          <MoviePoster poster={poster} title={title} plot={plot} trivia={trivia} />
+        </Col>
+      )
+    })
   }
 
   const fetchAllMovies = async () => {
@@ -55,7 +54,7 @@ export function App (props) {
         </Col>
       </Row>
       <Row>
-        {allMovies.map(movie => posterComponent(movie))}
+        {posters()}
       </Row>
     </React.Fragment>
   )
