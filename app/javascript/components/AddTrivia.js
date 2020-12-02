@@ -11,15 +11,30 @@ export function AddTrivia (props) {
 
   const onSubmit = (event) => {
     let response = props.addTriviaSubmit(event, newTrivia)
+
     if (response.ok) {
       setNewTrivia('')
     }
   }
 
   return (
-    <form id={`add-${props.movieId}`} className="add-trivia" onSubmit={onSubmit}>
-      <Textarea id={`textarea-add-${props.movieId}`} value={newTrivia} form={`add-${props.movieId}`} required validate label="Add more trivia..." onChange={newTriviaOnChange} />
-      <Button flat node="button" type="submit" waves="light" icon={<Icon className="secondary-content">add</Icon>}></Button>
+    <form id={`add-${props.movieId}`} className='add-trivia' onSubmit={onSubmit}>
+      <Textarea
+        id={`textarea-add-${props.movieId}`}
+        value={newTrivia}
+        form={`add-${props.movieId}`}
+        label='Add more trivia...'
+        onChange={newTriviaOnChange}
+        required
+        validate
+      />
+        <Button
+          flat
+          node='button'
+          type='submit'
+          waves='light'
+          icon={<Icon className='secondary-content'>add</Icon>}>
+        </Button>
     </form>
   )
 }
