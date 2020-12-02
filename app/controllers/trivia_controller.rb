@@ -12,11 +12,6 @@ class TriviaController < ApplicationController
   def show
   end
 
-  # GET /trivia/new
-  def new
-    @trivium = Trivia.new
-  end
-
   # GET /trivia/1/edit
   def edit
   end
