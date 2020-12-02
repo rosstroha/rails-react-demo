@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
-import { Row, Icon, Collection, CollectionItem, Textarea, Button } from 'react-materialize'
-import './Trivia.css'
+import { Row, Collection, CollectionItem } from 'react-materialize'
+import { AddTrivia } from './AddTrivia.js'
 
 export function Trivia (props) {
-  const [newTrivia, setNewTrivia] = useState('')
+  const [allTrivia, setAllTrivia] = useState(props.trivia || [])
 
-  const triviaComponent = () => {
-    if(!props.trivia) {
-      return null
-    }
-
-    return props.trivia.map(({id, body}) => <CollectionItem key={id}>{body}</CollectionItem>)
-  }
-
-  const onSubmit = async (event) => {
+  const onSubmit = async (event, newTrivia) => {
     event.preventDefault()
+
     const body = JSON.stringify({
       movie_id: props.movieId,
       body: newTrivia
@@ -28,17 +21,24 @@ export function Trivia (props) {
         method: 'POST',
         body,
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
         }
       }
     )
     let addedTrivia = await response.json()
-
+    if (response.ok) {
+      setAllTrivia(allTrivia => [...allTrivia, addedTrivia])
+    }
+    return response
   }
 
-  const newTriviaOnChange = (event) => {
-    setNewTrivia(event.target.value)
+  const triviaComponent = () => {
+    if (!allTrivia.length) {
+      return null
+    }
+
+    return allTrivia.map(({id, body}) => <CollectionItem key={id}>{body}</CollectionItem>)
   }
 
   return (
@@ -47,10 +47,7 @@ export function Trivia (props) {
         { triviaComponent() }
       </Collection>
       <Row>
-        <form id="add" className="add-trivia" onSubmit={onSubmit}>
-          <Textarea form="add" required validate label="Add more trivia..." onChange={newTriviaOnChange} />
-          <Button flat node="button" type="submit" waves="light" icon={<Icon className="secondary-content">add</Icon>}></Button>
-        </form>
+        <AddTrivia movieId={props.movieId} addTriviaSubmit={onSubmit} />
       </Row>
     </React.Fragment>
   )
