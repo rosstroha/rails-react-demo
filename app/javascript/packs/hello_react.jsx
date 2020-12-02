@@ -6,8 +6,10 @@ import ReactDOM from 'react-dom'
 import { App } from '../components/App.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  let reactRoot = document.createElement('div')
+  reactRoot.classList.add('container')
   ReactDOM.render(
     <App />,
-    document.body.appendChild(document.createElement('div'))
+    document.body.appendChild(reactRoot)
   )
 })

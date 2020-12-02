@@ -4,23 +4,25 @@ import './MovieSearch.css'
 
 export function MovieSearch (props) {
   return (
-    <Row>
-      <form className="search" onSubmit={props.onSubmit}>
-        <TextInput
-          value={props.imdbId}
-          onChange={props.onIdChange}
-        />
-        <Button
-          node="button"
-          type="submit"
-          waves="light"
-        >
-          Search
-          <Icon right>
-            search
-          </Icon>
-        </Button>
-      </form>
-    </Row>
+    <form id="search" className="search" onSubmit={props.onSubmit}>
+      <TextInput
+        form="search"
+        value={props.imdbId}
+        onChange={props.onIdChange}
+        label="Search with IMDB ID..."
+        required
+        validate
+      />
+      <Button
+        node="button"
+        type="submit"
+        waves="light"
+      >
+        Search
+        <Icon right>
+          search
+        </Icon>
+      </Button>
+    </form>
   )
 }

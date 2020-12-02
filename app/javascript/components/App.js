@@ -29,7 +29,7 @@ export function App (props) {
   const posters = () => {
     return allMovies.map((movie, index) => {
       return (
-        <Col s={2} key={index}>
+        <Col s={4} key={index}>
           <MoviePoster movie={movie} />
         </Col>
       )
@@ -49,7 +49,7 @@ export function App (props) {
   return (
     <React.Fragment>
       <Row>
-        <Col>
+        <Col s={12}>
           <MovieSearch onIdChange={handleIdChange} onSubmit={handleSubmit} imdbId={imdbId} />
         </Col>
       </Row>
