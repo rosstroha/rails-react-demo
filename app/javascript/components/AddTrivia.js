@@ -9,8 +9,8 @@ export function AddTrivia (props) {
     setNewTrivia(event.target.value)
   }
 
-  const onSubmit = (event) => {
-    let response = props.addTriviaSubmit(event, newTrivia)
+  const onSubmit = async (event) => {
+    let response = await props.addTriviaSubmit(event, newTrivia)
 
     if (response.ok) {
       setNewTrivia('')

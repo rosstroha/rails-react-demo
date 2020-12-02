@@ -33,19 +33,29 @@ export function Trivia (props) {
     return response
   }
 
-  const triviaComponent = () => {
+  const triviaCollection = () => {
     if (!allTrivia.length) {
       return null
     }
 
-    return allTrivia.map(({id, body}) => <CollectionItem key={id}>{body}</CollectionItem>)
+    return (
+      <Collection>
+        {
+          allTrivia.map(({id, body}) => {
+            return (
+              <CollectionItem key={id}>
+                <blockquote>{body}</blockquote>
+              </CollectionItem>
+            )
+          })
+        }
+      </Collection>
+    )
   }
 
   return (
     <React.Fragment>
-      <Collection>
-        { triviaComponent() }
-      </Collection>
+      { triviaCollection() || <h6>No trivia to display.</h6> }
       <Row>
         <AddTrivia movieId={props.movieId} addTriviaSubmit={onSubmit} />
       </Row>
